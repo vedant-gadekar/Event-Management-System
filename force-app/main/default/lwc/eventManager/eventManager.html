@@ -1,0 +1,55 @@
+<template>
+    <lightning-card title="Event Manager" icon-name="standard:event">
+
+        <div class="slds-m-around_medium">
+            <lightning-input
+                label="Event Name"
+                value={eventName}
+                onchange={handleNameChange}>
+            </lightning-input>
+
+            <lightning-input
+                type="number"
+                label="Max Participants"
+                value={maxParticipants}
+                onchange={handleMaxChange}>
+            </lightning-input>
+
+            <lightning-combobox
+                name="club"
+                label="Select Club"
+                value={selectedClub}
+                placeholder="Select Club"
+                options={clubOptions}
+                onchange={handleClubChange}>
+            </lightning-combobox>
+
+            <lightning-button
+                label="Add Event"
+                variant="brand"
+                class="slds-m-top_small"
+                onclick={handleAddEvent}>
+            </lightning-button>
+        </div>
+
+        <hr class="slds-m-vertical_small" />
+
+        <template if:true={events}>
+            <lightning-card title="Event Records" icon-name="standard:event">
+                <div class="slds-var-m-around_medium">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={events}
+                        columns={columns}
+                        hide-checkbox-column
+                        onrowaction={handleRowAction}>
+                    </lightning-datatable>
+                </div>
+            </lightning-card>
+        </template>
+
+        <template if:false={events}>
+            <p class="slds-p-around_medium">No Events Found</p>
+        </template>
+    </lightning-card>
+</template>

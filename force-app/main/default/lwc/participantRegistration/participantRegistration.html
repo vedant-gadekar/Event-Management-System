@@ -1,0 +1,56 @@
+<template>
+    <lightning-card title="Event Registration" >
+        <div class="slds-p-around_medium">
+
+            <lightning-input 
+                label="Participant Name" 
+                value={participantName} 
+                onchange={handleParticipantChange}
+                placeholder="Enter your name">
+            </lightning-input>
+            
+            <lightning-input 
+                type="email"
+                label="Participant Email" 
+                value={participantEmail} 
+                onchange={handleEmailChange}
+                placeholder="Enter email address">
+            </lightning-input>
+
+            <lightning-input 
+                type="number"
+                label="Team Members Count" 
+                value={teamMembersCount} 
+                min="1"
+                onchange={handleTeamCountChange}
+                placeholder="Enter number of team members">
+            </lightning-input>
+
+            <lightning-combobox
+                label="Select Event"
+                value={selectedEvent}
+                options={eventOptions}
+                onchange={handleEventChange}>
+            </lightning-combobox>
+
+            <div class="slds-m-top_medium">
+                <lightning-button 
+                    label="Register" 
+                    variant="brand" 
+                    onclick={handleRegister}>
+                </lightning-button>
+            </div>
+        </div>
+
+        <template if:true={registrations.length}>
+            <lightning-card title="All Registrations">
+                <lightning-datatable
+                    key-field="Id"
+                    data={registrations}
+                    columns={columns}
+                    onrowaction={handleRowAction}>
+                </lightning-datatable>
+            </lightning-card>
+        </template>
+    </lightning-card>
+</template>

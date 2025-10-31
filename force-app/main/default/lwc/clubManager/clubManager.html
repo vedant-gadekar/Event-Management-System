@@ -1,0 +1,45 @@
+<template>
+    <lightning-card title="Club Manager" icon-name="standard:account">
+
+        <div class="slds-m-around_medium">
+            <lightning-input
+                label="Club Name"
+                value={clubName}
+                onchange={handleNameChange}>
+            </lightning-input>
+            
+            <lightning-button
+                label="Add Club"
+                variant="brand"
+                class="slds-m-top_small"
+                onclick={handleAddClub}>
+            </lightning-button>
+        </div>
+
+        <hr class="slds-m-vertical_small" />
+
+
+        <template if:true={clubs}>
+            <lightning-card title="Club Records" icon-name="standard:account">
+                <div class="slds-var-m-around_medium">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={clubs}
+                        columns={columns}
+                        hide-checkbox-column
+                        onrowaction={handleRowAction}>
+                    </lightning-datatable>
+                </div>
+            </lightning-card>
+
+        </template>
+
+
+        <template if:false={clubs}>
+            <p class="slds-p-around_medium">No Clubs Found</p>
+        </template>
+
+      
+    </lightning-card>
+
+</template>
