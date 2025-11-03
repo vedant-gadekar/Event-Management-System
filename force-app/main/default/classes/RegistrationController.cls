@@ -20,7 +20,7 @@ public with sharing class RegistrationController {
     @AuraEnabled(cacheable=true)
     public static List<Registration__c> getAllRegistrations() {
         return [
-            SELECT Id, Name, Participant__r.Name, Event__r.Name,Participant__r.Team_Members_Count__c
+            SELECT Id, Name, Participant__r.Name, Event__r.Name,Participant__r.Team_Members_Count__c,Participant__r.Email__c
             FROM Registration__c
             ORDER BY CreatedDate DESC
         ];
@@ -59,7 +59,15 @@ public with sharing class RegistrationController {
     // DELETE Registration
     @AuraEnabled
     public static void deleteRegistration(Id registrationId) {
-        delete [SELECT Id FROM Registration__c WHERE Id = :registrationId LIMIT 1];
+        Registration__c reg = [
+            SELECT Id, Participant__c
+            FROM Registration__c
+            WHERE Id = :registrationId
+            LIMIT 1
+        ];
+        Id participantId=reg.Participant__c;
+        delete reg;
+        ParticipantController.deleteParticipant(participantId);
     }
 
 }

@@ -3,7 +3,7 @@ public class EventRegistrationEmailService {
     @future(callout=false)
     public static void sendRegistrationEmailAsync(Id registrationId) {
 
-        Registration__c reg = [
+        List<Registration__c> regs= [
             SELECT Id, Name,
                    Participant__r.Name,
                    Participant__r.Email__c,
@@ -14,6 +14,13 @@ public class EventRegistrationEmailService {
             WHERE Id = :registrationId
             LIMIT 1
         ];
+        if (regs.isEmpty()) {
+            // Record deleted before async ran — safely exit
+            System.debug('Registration record no longer exists, skipping email.');
+            return;
+        }
+
+        Registration__c reg = regs[0];
 
         if (String.isNotBlank(reg.Participant__r.Email__c)) {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();

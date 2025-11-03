@@ -48,7 +48,4 @@ public with sharing class EventController {
     public static void deleteEvent(Id eventId) {
         delete [SELECT Id FROM Event__c WHERE Id = :eventId LIMIT 1];
     }
-
-    
-
 }

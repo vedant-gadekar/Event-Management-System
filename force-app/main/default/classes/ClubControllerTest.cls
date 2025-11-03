@@ -1,6 +1,7 @@
 
 @IsTest
 public with sharing class ClubControllerTest {
+    
     @TestSetup
     static void setupTestData() {
 

@@ -77,6 +77,7 @@ public class EventControllerTest {
     @IsTest
     static void testDeleteEvent() {
         Club__c c = createTestClub();
+        
         Event__c evt = EventController.createEvent('Delete Me', c.Id, 10);
 
         Test.startTest();

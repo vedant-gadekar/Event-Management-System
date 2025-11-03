@@ -17,6 +17,7 @@ export default class EventManager extends LightningElement {
     columns = [
         { label: 'Event Name', fieldName: 'Name', type: 'text' },
         { label: 'Club', fieldName: 'ClubName', type: 'text' },
+        { label: 'Registered Participants', fieldName: 'Registered_Participants', type: 'number' },
         { label: 'Max Participants', fieldName: 'MaxParticipants', type: 'number',cellAttribute: { alignment: 'left' } },
         {
             type: 'button',
@@ -27,12 +28,14 @@ export default class EventManager extends LightningElement {
     // Fetch all events
     @wire(getAllEvents)
     wiredGetEvents(result) {
+        console.log('wiredGetEvents', result);
         this.wiredEvents = result;
         if (result.data) {
             this.events = result.data.map(evt => ({
                 Id: evt.Id,
                 Name: evt.Name,
                 ClubName: evt.Club__r?.Name || 'Not Assigned',
+                Registered_Participants: evt.Registered_Participants__c !== undefined ? evt.Registered_Participants__c : 0,
                 MaxParticipants: evt.Max_Partcipants__c !== undefined ? evt.Max_Partcipants__c : 0
             }));
         } else if (result.error) {
