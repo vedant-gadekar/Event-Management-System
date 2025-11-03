@@ -27,9 +27,7 @@ public class RegistrationTriggerHandler {
         Map<Id, Decimal> eventToAddCount = new Map<Id, Decimal>();
 
         for (Registration__c reg : regs) {
-            Decimal count = (reg.Participant__r.Team_Members_Count__c != null) 
-                ? reg.Participant__r.Team_Members_Count__c 
-                : 1;
+            Decimal count = (reg.Participant__r.Team_Members_Count__c != null) ? reg.Participant__r.Team_Members_Count__c : 1;
 
             if (!eventToAddCount.containsKey(reg.Event__c)) {
                 eventToAddCount.put(reg.Event__c, count);
@@ -46,9 +44,7 @@ public class RegistrationTriggerHandler {
         ];
 
         for (Event__c evt : eventsToUpdate) {
-            Decimal existing = (evt.Registered_Participants__c != null) 
-                ? evt.Registered_Participants__c 
-                : 0;
+            Decimal existing = (evt.Registered_Participants__c != null) ? evt.Registered_Participants__c : 0;
             evt.Registered_Participants__c = existing + eventToAddCount.get(evt.Id);
         }
 

@@ -107,7 +107,6 @@ export default class ParticipantRegistration extends LightningElement {
                 await refreshApex(this.wiredRegistrations);
             }, 2000); // 5-second delay
 
-
         } catch (error) {
             console.error('Error registering participant:', error);
             this.showToast('Error', error.body?.message || 'Error during registration', 'error');

@@ -16,8 +16,6 @@ public with sharing class RegistrationController {
         return reg.Id;
     }
 
-
-
     // read Registrations
     @AuraEnabled(cacheable=true)
     public static List<Registration__c> getAllRegistrations() {
