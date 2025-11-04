@@ -36,7 +36,7 @@ public class EventControllerTest {
             EventController.createEvent('', c.Id, 50);
         } catch (Exception e) {
             exceptionThrown = true;
-            // AuraHandledException appears as 'Script-thrown exception' in tests
+
             System.assertEquals('Script-thrown exception', e.getMessage(), 
                 'Expected AuraHandledException for blank event name');
         }

@@ -1,7 +1,7 @@
 public class EventRegistrationEmailService {
 
     @future(callout=false)
-    public static void sendRegistrationEmailAsync(Id registrationId) {
+    public static void sendRegistrationEmailAsync(List<Id> registrationIds) {
 
         List<Registration__c> regs= [
             SELECT Id, Name,
@@ -11,8 +11,7 @@ public class EventRegistrationEmailService {
                    Event__r.Max_Partcipants__c,
                    Event__r.Club__r.Name
             FROM Registration__c
-            WHERE Id = :registrationId
-            LIMIT 1
+            WHERE Id IN :registrationIds
         ];
         if (regs.isEmpty()) {
             // Record deleted before async ran — safely exit
@@ -20,9 +19,8 @@ public class EventRegistrationEmailService {
             return;
         }
 
-        Registration__c reg = regs[0];
-
-        if (String.isNotBlank(reg.Participant__r.Email__c)) {
+        for(Registration__c reg:regs){
+            if (String.isNotBlank(reg.Participant__r.Email__c)) {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             string mailId=reg.Participant__r.Email__c;
             string eventName=reg.Event__r.Name;
@@ -43,5 +41,7 @@ public class EventRegistrationEmailService {
 
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
         }
+        }
+        
     }
 }
