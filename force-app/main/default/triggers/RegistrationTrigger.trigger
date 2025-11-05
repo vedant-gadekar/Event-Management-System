@@ -1,9 +1,16 @@
 trigger RegistrationTrigger on Registration__c (after insert,after delete) {
     if(Trigger.isAfter && Trigger.isInsert) {
 
+        List<Id> regIds = new List<Id>();
         for (Registration__c reg : Trigger.new) {
-            EventRegistrationEmailService.sendRegistrationEmailAsync(reg.Id);
+            regIds.add(reg.Id);
         }
+
+        // Call async method only once for all new records thus avoiding the governor limit
+        if (!regIds.isEmpty()) {
+            EventRegistrationEmailService.sendRegistrationEmailAsync(regIds);
+        }
+
         
         RegistrationTriggerHandler.afterInsert(Trigger.new);
     }
