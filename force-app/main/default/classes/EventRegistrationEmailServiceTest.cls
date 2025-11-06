@@ -45,33 +45,33 @@ private class EventRegistrationEmailServiceTest {
 
     }
 
-    // @isTest
-    // static void testSingleInsertWithValidData() {
-    //     List<Registration__c> regs = createTestRegistrations(1, true);
-    //     List<Id> regIds = new List<Id>();
-    //     for (Registration__c r : regs) regIds.add(r.Id);
+    @isTest
+    static void testSingleInsertWithValidData() {
+        List<Registration__c> regs = createTestRegistrations(1, true);
+        List<Id> regIds = new List<Id>();
+        for (Registration__c r : regs) regIds.add(r.Id);
 
 
-    //     Test.startTest();
-    //     EventRegistrationEmailService.sendRegistrationEmailAsync(regIds);
-    //     Test.stopTest();
+        Test.startTest();
+        EventRegistrationEmailService.sendRegistrationEmailAsync(regIds);
+        Test.stopTest();
 
-    //     System.assert(true, 'Async email method executed successfully for valid data.');
-    // }
+        System.assert(true, 'Async email method executed successfully for valid data.');
+    }
 
-    // @isTest
-    // static void testMissingEmail() {
-    //     List<Registration__c> regs = createTestRegistrations(1, false);
-    //     List<Id> regIds = new List<Id>();
-    //     for (Registration__c r : regs) regIds.add(r.Id);
+    @isTest
+    static void testMissingEmail() {
+        List<Registration__c> regs = createTestRegistrations(1, false);
+        List<Id> regIds = new List<Id>();
+        for (Registration__c r : regs) regIds.add(r.Id);
 
-    //     Test.startTest();
-    //     EventRegistrationEmailService.sendRegistrationEmailAsync(regIds);
-    //     Test.stopTest();
+        Test.startTest();
+        EventRegistrationEmailService.sendRegistrationEmailAsync(regIds);
+        Test.stopTest();
 
-    //     // No exception expected, but no email should be sent
-    //     System.assert(true, 'Handled missing participant email gracefully.');
-    // }
+        // No exception expected, but no email should be sent
+        System.assert(true, 'Handled missing participant email gracefully.');
+    }
 
     @isTest
     static void testBulkInsert() {
